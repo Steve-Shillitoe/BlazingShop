@@ -38,6 +38,27 @@ a, .btn-link {
     color: red;
 }
 
+.media-image-wrapper{
+    width:200px;
+    height: 200px;
+    text-align:center;
+}
+
+.media-img{
+    max-height:200px;
+    max-width:auto;
+    border-radius:6px;
+    margin-bottom:10px;
+}
+
+.media-img:hover{transform:scale(1.1);}
+
+.price{color:green;}
+
+.original-price{text-decoration:line-through;}
+
+
+
 #blazor-error-ui {
     background: lightyellow;
     bottom: 0;
