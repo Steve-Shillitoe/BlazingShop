@@ -1,5 +1,7 @@
-﻿<ul class="list-unstyled">
-    @foreach (var product in products)
+﻿@inject IProductService ProductService
+
+<ul class="list-unstyled">
+    @foreach (var product in ProductService.Products)
     {
         <li class="media my-3">
             <div class="media-image-wrapper mr-2">
@@ -26,27 +28,10 @@
 </ul>
 
 @code {
-    List<Product> products = new List<Product>{
-        new Product
-        {
-            Id=1,
-            CategoryId=1,
-            Title="The Hitchhikers guide to the Galaxy",
-            Description="Comedy Science Fiction",
-            Image="https://upload.wikimedia.org/wikipedia/en/b/bd/H2G2_UK_front_cover.jpg",
-            Price=9.99m,
-            OriginalPrice=19.99m
-        },
-        new Product
-        {
-            Id=2,
-            CategoryId=3,
-            Title="Half Life 2",
-            Description="Game",
-            Image="https://upload.wikimedia.org/wikipedia/en/2/25/Half-Life_2_cover.jpg",
-            Price=10.99m,
-            OriginalPrice=21.99m
-        },
-    };
+    protected override void OnInitialized()
+    {
+        ProductService.LoadProducts();
+    }
+
 
 }
