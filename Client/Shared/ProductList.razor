@@ -1,7 +1,9 @@
 ﻿@inject IProductService ProductService
 
+
 <ul class="list-unstyled">
-    @foreach (var product in ProductService.Products)
+    @foreach (var product in CategoryID == null ? ProductService.Products : 
+    ProductService.Products.Where(p => p.CategoryId == CategoryID))
     {
         <li class="media my-3">
             <div class="media-image-wrapper mr-2">
@@ -28,6 +30,9 @@
 </ul>
 
 @code {
+    [Parameter]
+    public int? CategoryID { get; set; } = null;
+
     protected override void OnInitialized()
     {
         ProductService.LoadProducts();
