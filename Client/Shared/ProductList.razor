@@ -33,9 +33,9 @@
     [Parameter]
     public int? CategoryID { get; set; } = null;
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        ProductService.LoadProducts();
+       await  ProductService.LoadProducts();
     }
 
 

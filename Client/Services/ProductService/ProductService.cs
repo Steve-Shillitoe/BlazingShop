@@ -10,36 +10,22 @@ namespace BlazingShop.Client.Services.ProductService
 {
     public class ProductService : IProductService
     {
-        //private readonly HttpClient _http;
+        private readonly HttpClient _http;
 
-       // public event Action OnChange;
+        // public event Action OnChange;
 
-        public List<Product> Products { get; set; } = new List<Product>();
+        public List<Product> Products { get; set; }= new List<Product>();
 
-        public void LoadProducts()
+        public ProductService(HttpClient http) 
+        { 
+            _http = http;
+        }
+
+        public async Task LoadProducts()
         {
-            Products = new List<Product> {
-            new Product{
-                Id = 1,
-                CategoryId = 1,
-                Title = "The Hitchhikers guide to the Galaxy",
-                Description = "Comedy Science Fiction",
-                Image = "https://upload.wikimedia.org/wikipedia/en/b/bd/H2G2_UK_front_cover.jpg",
-                Price = 9.99m,
-                OriginalPrice = 19.99m
-            },
-        new Product
-        {
-            Id = 2,
-            CategoryId = 3,
-            Title = "Half Life 2",
-            Description = "Game",
-            Image = "https://upload.wikimedia.org/wikipedia/en/2/25/Half-Life_2_cover.jpg",
-            Price = 10.99m,
-            OriginalPrice = 21.99m
-        },
-    };
-}
+            Products = await _http.GetFromJsonAsync<List<Product>>("api/Product");
+        }
+
      
 
     //    public ProductService(HttpClient http)
