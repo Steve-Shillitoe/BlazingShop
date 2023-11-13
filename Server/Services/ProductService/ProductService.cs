@@ -66,7 +66,7 @@ namespace BlazingShop.Server.Services.ProductService
 
         public async Task<List<Product>> GetProductsByCategory(string categoryUrl)
         {
-            throw new NotImplementedException();
+            return Products.Where(p=>p.CategoryId==1).ToList();
             //Category category = await _categoryService.GetCategoryByUrl(categoryUrl);
            // return await _context.Products.Include(p => p.Variants).Where(p => p.CategoryId == category.Id).ToListAsync();
         }
