@@ -34,14 +34,13 @@ namespace BlazingShop.Server.Services.ProductService
             },
         };
 
-        //private readonly ICategoryService _categoryService;
+        private readonly ICategoryService _categoryService;
         //private readonly DataContext _context;
 
-        //public ProductService(ICategoryService categoryService, DataContext context)
-        //{
-        //    _categoryService = categoryService;
-        //    _context = context;
-        //}
+        public ProductService(ICategoryService categoryService)
+        {
+            _categoryService = categoryService;
+        }
 
         public async Task<List<Product>> GetAllProducts()
         {
@@ -50,7 +49,8 @@ namespace BlazingShop.Server.Services.ProductService
 
         public async Task<Product> GetProduct(int id)
         {
-            throw new NotImplementedException();
+            Product product = Products.FirstOrDefault(p =>p.Id == id);
+            return product;
             //Product product = await _context.Products
             //    .Include(p => p.Variants)
             //    .ThenInclude(v => v.Edition)
@@ -66,9 +66,9 @@ namespace BlazingShop.Server.Services.ProductService
 
         public async Task<List<Product>> GetProductsByCategory(string categoryUrl)
         {
-            return Products.Where(p=>p.CategoryId==1).ToList();
-            //Category category = await _categoryService.GetCategoryByUrl(categoryUrl);
-           // return await _context.Products.Include(p => p.Variants).Where(p => p.CategoryId == category.Id).ToListAsync();
+            //return Products.Where(p=>p.CategoryId==1).ToList();
+            Category category = await _categoryService.GetCategoryByUrl(categoryUrl);
+            return  Products.Where(p => p.CategoryId == category.Id).ToList();
         }
 
         //public async Task<List<Product>> SearchProducts(string searchText)

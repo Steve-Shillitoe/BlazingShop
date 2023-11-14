@@ -17,9 +17,9 @@ namespace BlazingShop.Server.Services.CategoryService
             
         }
 
-        public Task<Category> GetCategoryByUrl(string categoryUrl)
+        public async Task<Category> GetCategoryByUrl(string categoryUrl)
         {
-            throw new NotImplementedException();
+            return  Categories.FirstOrDefault(c => c.Url.ToLower().Equals(categoryUrl.ToLower()));
         }
     }
 }

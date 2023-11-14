@@ -26,15 +26,18 @@ namespace BlazingShop.Client.Services.ProductService
 
         public async Task LoadProducts(string? categoryUrl = null)
         {
-            Products = await _http.GetFromJsonAsync<List<Product>>($"api/Product/{categoryUrl}");
-            OnChange?.Invoke();
+            //Products = await _http.GetFromJsonAsync<List<Product>>($"api/Product/{categoryUrl}");
+            if (categoryUrl == null)
+            {
+                Products = await _http.GetFromJsonAsync<List<Product>>("api/Product");
+            }
+            else
+            {
+                Products = await _http.GetFromJsonAsync<List<Product>>($"api/Product/Category/{categoryUrl}");
+            }
+            OnChange.Invoke();
+            //OnChange?.Invoke();
         }
-
-        //[HttpGet]
-        //public async Task<Product> GetProduct(int id)
-        //{
-        //    return Products;
-        //}
 
         public async Task<Product> GetProduct(int id)
         {
