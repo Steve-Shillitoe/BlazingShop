@@ -1,6 +1,8 @@
 ﻿//using BlazingShop.Server.Data;
+using BlazingShop.Server.Data;
 using BlazingShop.Server.Services.CategoryService;
 using BlazingShop.Shared;
+using Microsoft.EntityFrameworkCore;
 //using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -35,21 +37,22 @@ namespace BlazingShop.Server.Services.ProductService
         };
 
         private readonly ICategoryService _categoryService;
-        //private readonly DataContext _context;
+        private readonly DataContext _context;
 
-        public ProductService(ICategoryService categoryService)
+        public ProductService(ICategoryService categoryService, DataContext context)
         {
             _categoryService = categoryService;
+            _context = context;
         }
 
         public async Task<List<Product>> GetAllProducts()
         {
-            return Products;
+            return await _context.Products.ToListAsync();
         }
 
         public async Task<Product> GetProduct(int id)
         {
-            Product product = Products.FirstOrDefault(p =>p.Id == id);
+            Product product = await _context.Products.FirstOrDefaultAsync(p =>p.Id == id);
             return product;
             //Product product = await _context.Products
             //    .Include(p => p.Variants)
@@ -68,7 +71,7 @@ namespace BlazingShop.Server.Services.ProductService
         {
             //return Products.Where(p=>p.CategoryId==1).ToList();
             Category category = await _categoryService.GetCategoryByUrl(categoryUrl);
-            return  Products.Where(p => p.CategoryId == category.Id).ToList();
+            return await _context.Products.Where(p => p.CategoryId == category.Id).ToListAsync();
         }
 
         //public async Task<List<Product>> SearchProducts(string searchText)
